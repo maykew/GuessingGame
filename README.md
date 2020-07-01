@@ -52,8 +52,6 @@ sorteado. Vence o jogador com a menor diferença.
 
 Em breve 
 
-Caso deseje alterar o número de jogadores, entre no código do servidor e atualize a variável numJogadores (lembre-se que cada jogador deve ser inicializado em um novo terminal).
-
 ### :family: Como contribuir
 
 - Faça um fork desse repositório;
