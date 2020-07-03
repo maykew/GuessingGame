@@ -31,22 +31,28 @@ tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 dest = (HOST, PORT)
 tcp.connect(dest)
 
-#Recebendo mensagem inicial
-msg = recebeMensagem(tcp)
-print (msg)
+try:
+    #Recebendo mensagem inicial
+    msg = recebeMensagem(tcp)
+    print (msg)
 
-#Recebendo mensagem inicial
-msg = recebeMensagem(tcp)
-print (msg)
+except:
+    print("\nO jogo foi iniciado antes de você conseguir se conectar, tente novamente")
+    tcp.close()
 
-msg = input()
-enviaMensagem(msg, tcp)
+else:
+    #Recebendo mensagem da jogada
+    msg = recebeMensagem(tcp)
 
-#Recebendo mensagem inicial
-msg = recebeMensagem(tcp)
-print ("\nPosição final: ", msg)
+    #Envia mensagem da jogada
+    jog = input(msg)
+    enviaMensagem(jog, tcp)
 
-######### Envia uma mensagem
-#mySend (tcp, idSensor, tpSensor, vlSensor)
+    #Recebendo mensagem inicial
+    msg = recebeMensagem(tcp)
+    print ("\nPosição final: ", msg)
 
-tcp.close()
+    ######### Envia uma mensagem
+    #mySend (tcp, idSensor, tpSensor, vlSensor)
+
+    tcp.close()

@@ -39,10 +39,9 @@ def conectado(con, cliente):
     enviaMensagem("\nHi! Welcome to Guessing Game\n", con)
     _thread.exit()
 
-def finalizando(con, cliente):
+def finaliza(con, cliente):
     print ('Finalizando conexao do cliente', cliente)
     con.close()
-    _thread.exit()
 
 def setJogadas(con, cliente):
     enviaMensagem("\nQual a sua jogada: ", con)
@@ -64,57 +63,56 @@ def ordenaLista():
                 clientes[i+1]=aux
                 troca=True
 
-def resultado(con, cliente):
+def resultado():
     for i in range(len(clientes)):
         enviaMensagem(str(i+1), clientes[i][0])
-        jogadas.popitem()
+    
 
 tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 orig = (HOST, PORT)
 tcp.bind(orig)
-tcp.listen(1)
+tcp.listen(10)
 
 clientes = []
 jogadas = {}
 aguardarJog = True
 
-print("\nDigite 1 para começar o jogo ou ENTER para esperar mais jogadores:")
+print("\nAguardando conexões")
 while True:
     con, cliente = tcp.accept()
     clientes.append((con, cliente))
     _thread.start_new_thread(conectado, tuple([con, cliente]))
-    if input() == '1': break
+    print("\nDigite 1 para começar o jogo ou ENTER para esperar mais jogadores\n")
+    if input() == '1': 
+        break
 
 numero = random.randint(1, 100)
 
-for cliente in clientes:
-    _thread.start_new_thread(setJogadas, cliente)
+for cli in clientes:
+    _thread.start_new_thread(setJogadas, cli)
 
+print ("\nAguardando jogadas...")
 while len(jogadas) != len(clientes):
-    esperar = "Aguardando clientes"
+    loopDeEspera = "Aguardando threads finalizarem"
 
-print("\nNumero: ", numero)
+print("\nNumero sorteado: ", numero)
 
 print("\nJogadas:")
 for cli in clientes:
-    print (cli[1],": ",jogadas[cli[0]])
+    print (cli[1],"- ",jogadas[cli[0]])
 
 ordenaLista()
 
-print("\nPosicao final:")
-for cli in clientes:
-    print (cli[1],": ",jogadas[cli[0]])
-
+print("\nResultado final:")
 for i in range(len(clientes)):
-    cliente = clientes[i]
-    _thread.start_new_thread(resultado, cliente)
+    cli = clientes[i]
+    print ("%d lugar: (%s, %d)  Jogada: |%d-%d| = %d" %(i+1, cli[1][0], cli[1][1], numero, jogadas[cli[0]], abs(numero-jogadas[cli[0]])) )
+    #print (i,"lugar:", cli[1],"- ",jogadas[cli[0]])
 
-while len(jogadas) != 0:
-    esperar = "Aguardando clientes"
+resultado()
 
-while len(clientes) > 0:
-    cliente = clientes[0]
-    clientes.pop(0)
-    _thread.start_new_thread(finalizando, cliente)
+print("\n")
+for cli in clientes:
+    finaliza(cli[0], cli[1])
 
 tcp.close()
