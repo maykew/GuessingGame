@@ -35,7 +35,7 @@ def recebeMensagem(remetente):
 def conectado(con, cliente):
     #idSensor, tpSensor, vlSensor = myRecv(con)
     #print (cliente, idSensor, tpSensor, vlSensor)
-    print ('Concetado por', cliente)
+    print ('Concetado por', cliente,'\n\nDigite 1 para começar o jogo ou ENTER para esperar mais jogadores:')
     enviaMensagem("\nHi! Welcome to Guessing Game\n", con)
     _thread.exit()
 
@@ -65,7 +65,8 @@ def ordenaLista():
 
 def resultado():
     for i in range(len(clientes)):
-        enviaMensagem(str(i+1), clientes[i][0])
+        msg = str(numero)+","+str(i+1)
+        enviaMensagem(msg, clientes[i][0])
     
 
 tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -77,12 +78,12 @@ clientes = []
 jogadas = {}
 aguardarJog = True
 
-print("\nAguardando conexões")
+print("\nAguardando conexões...")
 while True:
     con, cliente = tcp.accept()
     clientes.append((con, cliente))
     _thread.start_new_thread(conectado, tuple([con, cliente]))
-    print("\nDigite 1 para começar o jogo ou ENTER para esperar mais jogadores\n")
+    #print("")
     if input() == '1': 
         break
 
@@ -106,8 +107,7 @@ ordenaLista()
 print("\nResultado final:")
 for i in range(len(clientes)):
     cli = clientes[i]
-    print ("%d lugar: (%s, %d)  Jogada: |%d-%d| = %d" %(i+1, cli[1][0], cli[1][1], numero, jogadas[cli[0]], abs(numero-jogadas[cli[0]])) )
-    #print (i,"lugar:", cli[1],"- ",jogadas[cli[0]])
+    print ("%d lugar: (%s, %d)  Diferença: |%d-%d| = %d" %(i+1, cli[1][0], cli[1][1], numero, jogadas[cli[0]], abs(numero-jogadas[cli[0]])))
 
 resultado()
 

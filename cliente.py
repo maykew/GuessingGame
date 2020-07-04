@@ -50,7 +50,8 @@ else:
 
     #Recebendo mensagem inicial
     msg = recebeMensagem(tcp)
-    print ("\nPosição final: ", msg)
+    result = msg.split(",") 
+    print ("\nNumero sorteado:",result[0],"\nPosição final: ", result[1])
 
     ######### Envia uma mensagem
     #mySend (tcp, idSensor, tpSensor, vlSensor)
