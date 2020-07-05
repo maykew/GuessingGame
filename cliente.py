@@ -3,11 +3,19 @@ import struct
 
 HOST = '127.0.0.1'     # Endereco IP do Servidor
 PORT = 5000            # Porta que o Servidor esta
-# Campos da mensagem
-idSensor = 70000
-tpSensor = 50000
-vlSensor = -169
 
+# Campos da mensagem
+#idSensor = 70000
+#tpSensor = 50000
+#vlSensor = -169
+
+#-------------- Funcoes --------------
+
+# Funcao de empacotamento e envio de da mensagem
+#def mySend (socket, idSensor, tpSensor, vlSensor):
+#	msg = struct.pack('!IHh', idSensor, tpSensor, vlSensor) # Empacota a informação
+#	print (msg)
+#	socket.send (msg)
 
 #Funcao que recebe uma mensagem e uma conexao como paramentro, e encaminha a mensagem para o cliente
 def enviaMensagem(msg, destino):
@@ -20,26 +28,27 @@ def recebeMensagem(remetente):
     msg = msg.decode('UTF-8')	# Decodifica a mensagem
     return msg
 
-# Funcao de empacotamento e envio de da mensagem
-#def mySend (socket, idSensor, tpSensor, vlSensor):
-#	msg = struct.pack('!IHh', idSensor, tpSensor, vlSensor) # Empacota a informação
-#	print (msg)
-#	socket.send (msg)
 
-######### Inicio do programa	
+
+#-------------- Inicio do programa --------------
+
+# Cria o socket do cliente
 tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-dest = (HOST, PORT)
-tcp.connect(dest)
+dest = (HOST, PORT)  # Forma a tupla de host(ip), porta
+tcp.connect(dest)  # Estabelece a conexao
 
+# Tenta se conectar ao servidor
 try:
     #Recebendo mensagem inicial
     msg = recebeMensagem(tcp)
     print (msg)
 
+# Caso não consiga se conectar é obtido um erro
 except:
     print("\nO jogo foi iniciado antes de você conseguir se conectar, tente novamente")
     tcp.close()
 
+#Caso consiga se conectar, o programa segue normalmente
 else:
     #Recebendo mensagem da jogada
     msg = recebeMensagem(tcp)
@@ -48,7 +57,7 @@ else:
     jog = input(msg)
     enviaMensagem(jog, tcp)
 
-    #Recebendo mensagem inicial
+    #Recebendo mensagem de resultado
     msg = recebeMensagem(tcp)
     result = msg.split(",") 
     print ("\nNumero sorteado:",result[0],"\nPosição final: ", result[1])
@@ -56,4 +65,4 @@ else:
     ######### Envia uma mensagem
     #mySend (tcp, idSensor, tpSensor, vlSensor)
 
-    tcp.close()
+    tcp.close()  # Fecha a conexao com o servidor
