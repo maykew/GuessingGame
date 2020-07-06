@@ -48,7 +48,10 @@ Funcionamento:
 
 ### :mortar_board: Como executar o projeto
 
-Em breve 
+- Faça um clone deste repositório: `git clone https://github.com/maykew/GuessingGame`;
+- Entre no diretório GuessingGame;
+- Abra um terminal e inicialize o servidor: `python servidor.py`;
+- Com o servidor inicializado, abra um novo terminal para cada jogador da partida: `python cliente.py`;
 
 ### :family: Como contribuir
 
