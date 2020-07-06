@@ -1,21 +1,9 @@
 import socket
-import struct
 
 HOST = '127.0.0.1'     # Endereco IP do Servidor
 PORT = 5000            # Porta que o Servidor esta
 
-# Campos da mensagem
-#idSensor = 70000
-#tpSensor = 50000
-#vlSensor = -169
-
 #-------------- Funcoes --------------
-
-# Funcao de empacotamento e envio de da mensagem
-#def mySend (socket, idSensor, tpSensor, vlSensor):
-#	msg = struct.pack('!IHh', idSensor, tpSensor, vlSensor) # Empacota a informação
-#	print (msg)
-#	socket.send (msg)
 
 #Funcao que recebe uma mensagem e uma conexao como paramentro, e encaminha a mensagem para o cliente
 def enviaMensagem(msg, destino):
@@ -59,10 +47,10 @@ else:
 
     #Recebendo mensagem de resultado
     msg = recebeMensagem(tcp)
-    result = msg.split(",") 
-    print ("\nNumero sorteado:",result[0],"\nPosição final: ", result[1])
-
-    ######### Envia uma mensagem
-    #mySend (tcp, idSensor, tpSensor, vlSensor)
+    result = msg.split(",")
+    if int(result[0]) < 0:
+        print("\nJogada invalida, você foi eliminado!")
+    else:
+        print ("\nNumero sorteado:",result[0],"\nPosição final: ", result[1])
 
     tcp.close()  # Fecha a conexao com o servidor

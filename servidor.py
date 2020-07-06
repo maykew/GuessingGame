@@ -1,28 +1,11 @@
 import socket
-import struct
 import _thread
-import time
 import random
 
 HOST = ''              # Endereco IP do Servidor
 PORT = 5000            # Porta que o Servidor esta
 
-# Campos da mensagem
-#idSensor = None
-#tpSensor = None
-#vlSensor = None
-#structsize = 8
-
 #-------------- Funcoes --------------
-
-# Funcao de recepcao e desempacotamento da mensagem
-#def myRecv (socket):
-#	try:	
-#		msg = socket.recv(structsize)
-#		print (cliente, msg)
-#		return struct.unpack('!IHh', msg) # Desempacota a informação
-#	except:
-#		return None
 
 #Funcao que recebe uma mensagem e uma conexao como paramentro, e encaminha a mensagem para o cliente
 def enviaMensagem(msg, destino):
@@ -49,10 +32,16 @@ def finaliza(con, cliente):
     con.close()
 
 #Funcao que envia mensagem para receber jogada e recebe a jogada
-def setJogadas(con, cliente):
+def setJogadas(con, cliente, indice):
     enviaMensagem("\nQual a sua jogada: ", con)
     jogada = recebeMensagem(con)
-    jogadas[con] = int(jogada)
+    # Caso a jogada seja valida, é armazenada no dicionario de jogadas
+    if jogada.isdigit():
+        jogadas[con] = int(jogada)
+    #Caso a jogada não seja valida, é adicionada na lista de erros
+    else:
+        jogadas[con] = None
+        erro.append(indice)
     _thread.exit()
 
 #Funcao que ordena a lista de clientes com base na diferença entre a jogada e numero sorteado
@@ -92,6 +81,7 @@ clientes = []
 #Dicionario de jogadas onde a chave é a conexao e o valor é a jogada 
 jogadas = {}
 
+erro = [] # Lista que armazena indices de clientes com jogadas invalidas
 aguardarJog = True  # Variavel para aguardar jogadores
 
 print("\nAguardando conexões...")
@@ -110,13 +100,24 @@ while aguardarJog:
 numero = random.randint(1, 100)  # Armazena numero aleatorio de 1 a 100
 
 #Envia e recebe de jogadas e armazena no dicionario
-for cli in clientes:
-    _thread.start_new_thread(setJogadas, cli)
+for i in range(len(clientes)):
+    con = clientes[i][0]
+    cli = clientes[i][1]
+    _thread.start_new_thread(setJogadas, tuple([con, cli, i]))
 
 #Espera todos os jogadores enviarem as jogadas (todas as threads finalizarem)
 print ("\nAguardando jogadas...")
 while len(jogadas) != len(clientes):
-    loopDeEspera = "Aguardando threads finalizarem"
+    pass
+
+#Elimina clientes com jogadas invalidas
+for indice in erro:
+    con = clientes[indice][0]
+    cli = clientes[indice][1]
+    enviaMensagem("-1,0",con)  # Envia ensagem de eliminação
+    finaliza(con, cli)  # Finaliza conexao
+    clientes.pop(indice)  # Exclui da lista de clientes
+    jogadas.pop(con)  # Exclui jogada
 
 #Print para controle do servidor
 print("\nNumero sorteado: ", numero)
