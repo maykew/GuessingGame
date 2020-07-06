@@ -33,7 +33,7 @@ try:
 
 # Caso não consiga se conectar é obtido um erro
 except:
-    print("\nO jogo foi iniciado antes de você conseguir se conectar, tente novamente")
+    print("\nThe game started before you were able to connect, try again")
     tcp.close()
 
 #Caso consiga se conectar, o programa segue normalmente
@@ -49,8 +49,8 @@ else:
     msg = recebeMensagem(tcp)
     result = msg.split(",")
     if int(result[0]) < 0:
-        print("\nJogada invalida, você foi eliminado!")
+        print("\nInvalid choice, you were eliminated!")
     else:
-        print ("\nNumero sorteado:",result[0],"\nPosição final: ", result[1])
+        print ("\nNumber drawn:",result[0],"\nFinal position in the ranking: ", result[1],)
 
     tcp.close()  # Fecha a conexao com o servidor

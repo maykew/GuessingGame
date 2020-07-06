@@ -26,8 +26,8 @@ Este é um desafio com o intuito de desenvolver uma aplicação distribuída con
 
 ### :dart: Objetivos
 
-- Familiarizar-se com a programação utilizando a [API socket](https://docs.python.org/3/library/socket.html);<br>
-- Ambientar-se na programação com Threads.
+- Familiarizar-se com a programação utilizando a API [socket](https://docs.python.org/3/library/socket.html);<br>
+- Ambientar-se na programação com Threads utilizando a API [_thread](https://docs.python.org/3/library/_thread.html).
 
 ### :boom: Tecnologias
 

@@ -22,26 +22,26 @@ def recebeMensagem(remetente):
 def conectado(con, cliente):
     #idSensor, tpSensor, vlSensor = myRecv(con)
     #print (cliente, idSensor, tpSensor, vlSensor)
-    print ('Concetado por', cliente,'\n\nDigite 1 para começar o jogo ou ENTER para esperar mais jogadores:')
-    enviaMensagem("\nHi! Welcome to Guessing Game\n", con)
+    print ('Connected by', cliente,'\n\nType 1 to start the game or press ENTER to wait for more players:')
+    enviaMensagem("\nHi! Welcome to Guessing Game\nI will raffle a number from 1 to 100 and you will have to guess\n\nPlease wait for the game to start", con)
     _thread.exit()
 
 #Funcao que encerra a conexao com um cliente
 def finaliza(con, cliente):
-    print ('Finalizando conexao do cliente', cliente)
+    print ('Finalizing client connection', cliente)
     con.close()
 
 #Funcao que envia mensagem para receber jogada e recebe a jogada
 def setJogadas(con, cliente, indice):
-    enviaMensagem("\nQual a sua jogada: ", con)
+    enviaMensagem("\nLet's go, what's your guess: ", con)
     jogada = recebeMensagem(con)
     # Caso a jogada seja valida, é armazenada no dicionario de jogadas
     if jogada.isdigit():
         jogadas[con] = int(jogada)
-    #Caso a jogada não seja valida, é adicionada na lista de erros
+    #Caso a jogada não seja valida, é adicionada na lista de eliminados
     else:
         jogadas[con] = None
-        erro.append(indice)
+        clientesEliminados.append(indice)
     _thread.exit()
 
 #Funcao que ordena a lista de clientes com base na diferença entre a jogada e numero sorteado
@@ -65,6 +65,15 @@ def resultado():
         msg = str(numero)+","+str(i+1)
         enviaMensagem(msg, clientes[i][0])
 
+#Funcao que gera string para a posicao em ingles
+def posicao(num):
+    if num == 1:
+        return "st"
+    elif num == 2:
+        return "nd"
+    else:
+        return "th"
+
 
 
 #-------------- Inicio do programa --------------    
@@ -81,10 +90,10 @@ clientes = []
 #Dicionario de jogadas onde a chave é a conexao e o valor é a jogada 
 jogadas = {}
 
-erro = [] # Lista que armazena indices de clientes com jogadas invalidas
+clientesEliminados = [] # Lista que armazena indices de clientes com jogadas invalidas
 aguardarJog = True  # Variavel para aguardar jogadores
 
-print("\nAguardando conexões...")
+print("\nWaiting for connections...")
 while aguardarJog:
     #Realiza a conexao dos clientes
     con, cliente = tcp.accept()
@@ -106,12 +115,12 @@ for i in range(len(clientes)):
     _thread.start_new_thread(setJogadas, tuple([con, cli, i]))
 
 #Espera todos os jogadores enviarem as jogadas (todas as threads finalizarem)
-print ("\nAguardando jogadas...")
+print ("\nWaiting for hunches...")
 while len(jogadas) != len(clientes):
     pass
 
 #Elimina clientes com jogadas invalidas
-for indice in erro:
+for indice in clientesEliminados:
     con = clientes[indice][0]
     cli = clientes[indice][1]
     enviaMensagem("-1,0",con)  # Envia ensagem de eliminação
@@ -120,20 +129,21 @@ for indice in erro:
     jogadas.pop(con)  # Exclui jogada
 
 #Print para controle do servidor
-print("\nNumero sorteado: ", numero)
+print("\nNumber drawn: ", numero)
 
 #Print para controle do servidor
-print("\nJogadas:")
+print("\nGuesses:")
 for cli in clientes:
     print (cli[1],"- ",jogadas[cli[0]])
 
 ordenaLista()
 
 #Print para controle do servidor
-print("\nResultado final:")
+print("\nRanking:")
 for i in range(len(clientes)):
     cli = clientes[i]
-    print ("%d lugar: (%s, %d)  Diferença: |%d-%d| = %d" %(i+1, cli[1][0], cli[1][1], numero, jogadas[cli[0]], abs(numero-jogadas[cli[0]])))
+    pos = posicao(i+1)
+    print ("%d%s: (%s, %d)  Difference: |%d-%d| = %d" %(i+1, pos, cli[1][0], cli[1][1], numero, jogadas[cli[0]], abs(numero-jogadas[cli[0]])))
 
 resultado()
 
