@@ -51,6 +51,6 @@ else:
     if int(result[0]) < 0:
         print("\nInvalid choice, you were eliminated!")
     else:
-        print ("\nNumber drawn:",result[0],"\nFinal position in the ranking: ", result[1],)
+        print ("\nNumber drawn:",result[0],"\nFinal position in the ranking:", result[1])
 
     tcp.close()  # Fecha a conexao com o servidor

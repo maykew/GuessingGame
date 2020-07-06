@@ -66,7 +66,7 @@ def resultado():
         enviaMensagem(msg, clientes[i][0])
 
 #Funcao que gera string para a posicao em ingles
-def posicao(num):
+def getStringPosition(num):
     if num == 1:
         return "st"
     elif num == 2:
@@ -142,7 +142,7 @@ ordenaLista()
 print("\nRanking:")
 for i in range(len(clientes)):
     cli = clientes[i]
-    pos = posicao(i+1)
+    pos = getStringPosition(i+1)
     print ("%d%s: (%s, %d)  Difference: |%d-%d| = %d" %(i+1, pos, cli[1][0], cli[1][1], numero, jogadas[cli[0]], abs(numero-jogadas[cli[0]])))
 
 resultado()

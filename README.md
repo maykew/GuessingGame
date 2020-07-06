@@ -42,11 +42,9 @@ Participantes:
 - Jogador: representado por uma instância da aplicação cliente.
 
 Funcionamento:
-1. O árbitro do jogo sorteia um número entre 1 e 100 e envia uma mensagem para cada jogador
-solicitando um palpite;
-2. Os jogadores apresentam as suas opções;
-3. O árbitro do jogo calcula as diferenças de forma absoluta entre as opções de cada jogador e o número
-sorteado. Vence o jogador com a menor diferença.
+1. O árbitro do jogo sorteia um número entre 1 e 100 e envia uma mensagem para cada jogador solicitando um palpite; <br>
+2. Os jogadores apresentam as suas opções; <br>
+3. O árbitro do jogo calcula as diferenças de forma absoluta entre as opções de cada jogador e o número sorteado. Vence o jogador com a menor diferença.
 
 ### :mortar_board: Como executar o projeto
 
