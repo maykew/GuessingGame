@@ -50,8 +50,9 @@ Funcionamento:
 
 - Faça um clone deste repositório: `git clone https://github.com/maykew/GuessingGame`;
 - Entre no diretório GuessingGame;
-- Abra um terminal e inicialize o servidor: `python servidor.py`;
-- Com o servidor inicializado, abra um novo terminal para cada jogador da partida: `python cliente.py`;
+- Abra um novo terminal e inicialize o servidor: `python servidor.py`;
+- Abra um novo terminal e inicialize o jogador: `python cliente.py`;
+- Para iniciar o jogo execute `1` no servidor, se desejar mais um jogador aperte `Enter` e volte ao passo anterior.
 
 ### :family: Como contribuir
 
