@@ -52,7 +52,7 @@ Funcionamento:
 - Entre no diretório GuessingGame;
 - Abra um novo terminal e inicialize o servidor: `python servidor.py`;
 - Abra um novo terminal e inicialize o jogador: `python cliente.py`;
-- Para iniciar o jogo execute `1` no servidor, se desejar mais um jogador aperte `Enter` e volte ao passo anterior.
+- Digite `1` no servidor para iniciar o jogo ou, se desejar mais um jogador, aperte `Enter` e volte ao passo anterior.
 
 ### :family: Como contribuir
 
