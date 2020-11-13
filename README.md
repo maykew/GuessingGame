@@ -9,7 +9,6 @@
 <p align="center">
   <a href="#computer-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#dart-objetivos">Objetivos</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#boom-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#warning-regras-do-jogo">Regras do Jogo</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#mortar_board-como-executar-o-projeto">Como executar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#family-como-contribuir">Como contribuir</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
@@ -28,12 +27,6 @@ Este é um desafio com o intuito de desenvolver uma aplicação distribuída con
 
 - Familiarizar-se com a programação utilizando a API [socket](https://docs.python.org/3/library/socket.html);<br>
 - Ambientar-se na programação com Threads utilizando a API [_thread](https://docs.python.org/3/library/_thread.html).
-
-### :boom: Tecnologias
-
-Esse projeto foi desenvolvido com as seguintes tecnologias:
-
-- [Python](https://www.python.org/)
 
 ### :warning: Regras do Jogo
 
